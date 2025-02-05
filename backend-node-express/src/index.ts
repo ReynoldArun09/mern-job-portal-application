@@ -1,14 +1,14 @@
 import app from "./app";
-import { ParsedEnvVariables } from "./configs/app.config";
-import { GlobalErrorMessages } from "./constants/globalError.messages";
-import { GlobalSuccessMessages } from "./constants/globalSuccess.messages";
-import { logger } from "./utils/custom.logger";
+import { InitializeMongoConnection, ParsedEnvVariables } from "./configs";
+import { GlobalErrorMessages, GlobalSuccessMessages } from "./constants";
+import { logger } from "./utils";
 
 const PORT = ParsedEnvVariables.PORT;
 const ENV = ParsedEnvVariables.NODE_ENV;
 
 async function startServer() {
   try {
+    await InitializeMongoConnection();
     app.listen(PORT, () => {
       ENV === "development" ? logger.info(GlobalSuccessMessages.DEV_SERVER_STARTED) : logger.info(GlobalSuccessMessages.SERVER_STARTED);
     });

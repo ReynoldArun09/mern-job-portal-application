@@ -1,8 +1,7 @@
 import dotenv from "dotenv";
 import { z } from "zod";
-import { GlobalErrorMessages } from "../constants/globalError.messages";
-import { ValidationMessages } from "../constants/validationError.messages";
-import { logger } from "../utils/custom.logger";
+import { GlobalErrorMessages, ValidationMessages } from "../constants";
+import { logger } from "../utils";
 
 dotenv.config();
 

@@ -4,7 +4,7 @@ import express, { Application } from "express";
 import helmet from "helmet";
 import swaggerUI from "swagger-ui-express";
 import YAML from "yamljs";
-import { ParsedEnvVariables } from "./configs/app.config";
+import { ParsedEnvVariables } from "./configs";
 
 const app: Application = express();
 const swaggerSpec = YAML.load("./src/lib/swagger.yaml");
