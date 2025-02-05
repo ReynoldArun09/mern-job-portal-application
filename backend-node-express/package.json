@@ -11,7 +11,7 @@
     "seed": "ts-node ./src/scripts/seed.ts"
   },
   "keywords": [],
-  "author": "ReynoldArun009",
+  "author": "ReynoldArun09",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",

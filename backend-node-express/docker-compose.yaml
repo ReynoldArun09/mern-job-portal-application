@@ -1,0 +1,25 @@
+services:
+  jp-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    container_name: jp-portal
+    env_file:
+      - .env
+    command: pnpm dev
+
+  mongo:
+    image: mongo:latest
+    container_name: jp-portal-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
