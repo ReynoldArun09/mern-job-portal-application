@@ -6,7 +6,7 @@ import swaggerUI from "swagger-ui-express";
 import YAML from "yamljs";
 import { ParsedEnvVariables } from "./configs";
 import { ErrorHandler } from "./middlewares";
-import { authRoutes, companyRoutes, jobRoutes, userRoutes } from "./routes";
+import { applicationRoutes, authRoutes, companyRoutes, jobRoutes, userRoutes } from "./routes";
 
 const app: Application = express();
 const swaggerSpec = YAML.load("./src/lib/swagger.yaml");
@@ -38,6 +38,7 @@ app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/company", companyRoutes);
 app.use("/api/v1/job", jobRoutes);
+app.use("/api/v1/application", applicationRoutes);
 app.use(ErrorHandler);
 
 export default app;
