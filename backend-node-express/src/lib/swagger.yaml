@@ -1,0 +1,283 @@
+openapi: 3.1.0
+info:
+  title: Job Portal Application
+  description: API documentation for the job portal Application
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000
+paths:
+  /api/v1/auth/signup:
+    post:
+      tags:
+        - Auth
+      summary: Sign up user
+      description: sign up route for users
+      requestBody:
+        description: User credentials
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Signup"
+              example:
+                email: user@example.com
+                password: password123456789A$
+                fullname: johndoe
+                role: student
+                phoneNumber: 1234567890
+      responses:
+        "201":
+          description: User created successfully
+        "400":
+          description: User already exists
+        "500":
+          description: Oops! Something went wrong. Please try again later.
+
+  /api/v1/auth/signin:
+    post:
+      tags:
+        - Auth
+      summary: Sign In user
+      description: sign in route for users
+      requestBody:
+        description: User credentials
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Signin"
+              example:
+                email: user@example.com
+                password: password123456789A$
+                role: student
+      responses:
+        "201":
+          description: User logged in successfully.
+        "400":
+          description: User not found.
+        "500":
+          description: Oops! Something went wrong. Please try again later.
+
+  /api/v1/auth/signout:
+    post:
+      tags:
+        - Auth
+      summary: Sign out user
+      description: sign out route for users
+      responses:
+        "200":
+          description: User has been logged out.
+        "500":
+          description: Oops! Something went wrong. Please try again later.
+
+  /api/v1/company/create-company:
+    post:
+      tags:
+        - Company
+      summary: Create company
+      description: Route for creating a company
+      security:
+        - CookieAuth: []
+      requestBody:
+        description: company name
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Company"
+              example:
+                companyName: "testingcompany"
+      responses:
+        "201":
+          description: Company created.
+        "400":
+          description: Company Aleady exists.
+        "401":
+          description: You are not authorized to perform this action.
+        "500":
+          description: Oops! Something went wrong. Please try again later.
+
+  /api/v1/company/get-company:
+    get:
+      tags:
+        - Company
+      summary: Get logged-in user's company
+      description: Retrieve the company associated with the logged-in user
+      security:
+        - CookieAuth: []
+      responses:
+        "200":
+          description: success.
+        "400":
+          description: Company not found.
+        "500":
+          description: Oops! Something went wrong. Please try again later.
+
+  /api/v1/company/company/{id}:
+    get:
+      tags:
+        - Company
+      summary: Get company by ID
+      description: Retrieve a company by its ID
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: the id of the company
+          schema:
+            type: string
+      responses:
+        "200":
+          description: success.
+        "400":
+          description: Company not found.
+        "500":
+          description: Oops! Something went wrong. Please try again later.
+
+  /api/v1/job/create-job:
+    post:
+      tags:
+        - Job
+      summary: Create job
+      description: Route for creating a job
+      security:
+        - CookieAuth: []
+      requestBody:
+        description: Job credentials
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Job"
+              example:
+                title: testingcompany
+                description: testindescription
+                salary: 50000
+                location: India
+                jobType: fulltime
+                experienceLevel: 2
+                position: 2
+                companyId: companyid123
+      responses:
+        "201":
+          description: Job created.
+        "401":
+          description: You are not authorized to perform this action.
+        "500":
+          description: Oops! Something went wrong. Please try again later.
+
+  /api/v1/job/single/{id}:
+    get:
+      tags:
+        - Job
+      summary: Get job by ID
+      description: Retrieve a job by job id
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: the id of the job
+          schema:
+            type: string
+      responses:
+        "200":
+          description: success.
+        "400":
+          description: Job not found.
+        "500":
+          description: Oops! Something went wrong. Please try again later.
+
+  /api/v1/job/admin-jobs:
+    get:
+      tags:
+        - Job
+      summary: Get admin jobs
+      description: Retrieve jobs created by the admin.
+      security:
+        - CookieAuth: []
+      responses:
+        "200":
+          description: success.
+        "400":
+          description: Jobs not found.
+        "500":
+          description: Oops! Something went wrong. Please try again later.
+
+components:
+  schemas:
+    Job:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        salary:
+          type: number
+        location:
+          type: string
+        jobType:
+          type: string
+        experienceLevel:
+          type: number
+        position:
+          type: number
+        companyId:
+          type: string
+
+    Signup:
+      type: object
+      properties:
+        fullname:
+          type: string
+        email:
+          type: string
+          format: email
+        role:
+          type: string
+          enum:
+            - student
+            - recruiter
+        password:
+          type: string
+        phoneNumber:
+          type: number
+          maxLength: 10
+
+    Signin:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+        role:
+          type: string
+          enum:
+            - student
+            - recruiter
+
+    Company:
+      type: string
+      properties:
+        companyName:
+          type: string
+
+  securitySchemes:
+    CookieAuth:
+      type: apiKey
+      in: cookie
+      name: accessToken
+
+tags:
+  - name: Auth
+    description: Endpoints related to authentication (signup, signin, signout)
+  - name: Company
+    description: Endpoints for company creation and retrieval
+  - name: Job
+    description: Endpoints for job creation and retrieval
