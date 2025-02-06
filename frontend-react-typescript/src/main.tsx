@@ -1,5 +1,4 @@
 import { scan } from "react-scan"; // import this BEFORE react
-import React from "react";
 
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";

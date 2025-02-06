@@ -7,12 +7,13 @@ import AuthLayout from "../layout/auth-layout";
 import AdminLayout from "../layout/admin-layout";
 import DashboardPage from "../pages/admin/dashboard-page";
 import ProtectedRoute from "./protected-route";
+import SiteLayout from "../layout/site-layout";
 
 export default function AppRoutes() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route>
+        <Route element={<SiteLayout />}>
           <Route path="/" element={<HomePage />} />
         </Route>
 
