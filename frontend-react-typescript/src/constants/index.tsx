@@ -9,6 +9,7 @@ export const socialLinks = [
 export const categories: string[] = ["Frontend Developer", "Backend Developer", "Data Science", "Graphic Designer", "FullStack Developer"];
 
 export const adminRoutes = [
+  { name: "Home", url: "/" },
   { name: "Companies", url: "/admin/companies" },
   { name: "Jobs", url: "/admin/jobs" },
 ];
