@@ -5,7 +5,7 @@ import helmet from "helmet";
 import swaggerUI from "swagger-ui-express";
 import YAML from "yamljs";
 import { ParsedEnvVariables } from "./configs";
-import { authRoutes } from "./routes";
+import { authRoutes, userRoutes } from "./routes";
 
 const app: Application = express();
 const swaggerSpec = YAML.load("./src/lib/swagger.yaml");
@@ -34,5 +34,6 @@ if (ParsedEnvVariables.NODE_ENV !== "production") {
 }
 
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/user", userRoutes);
 
 export default app;
