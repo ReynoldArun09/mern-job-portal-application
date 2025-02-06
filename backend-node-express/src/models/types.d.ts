@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 export type Role = "student" | "recruiter";
+export type ApplicaitonStatus = "pending" | "accepted" | "rejected";
 
 export interface Profile {
   bio: string;
@@ -18,4 +19,33 @@ export interface UserDocument extends Document {
   phoneNumber: number;
   role: Role;
   profile: Profile;
+}
+
+export interface JobDocument extends Document {
+  title: string;
+  description: string;
+  requirements: string[];
+  salary: number;
+  experienceLevel: number;
+  location: string;
+  jobType: string;
+  position: number;
+  company: mongoose.Types.ObjectId;
+  createdBy: mongoose.Types.ObjectId;
+  applications: Application[];
+}
+
+export interface ApplicationDocument extends Document {
+  job: mongoose.Types.ObjectId;
+  applicant: mongoose.Types.ObjectId;
+  status: ApplicaitonStatus;
+}
+
+export interface CompanyDocument extends Document {
+  name: string;
+  location: string;
+  description: string;
+  logo: string;
+  website: string;
+  userId: mongoose.Types.ObjectId;
 }
