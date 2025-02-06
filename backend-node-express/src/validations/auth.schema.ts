@@ -16,7 +16,7 @@ export const SignUpSchema = z.object({
     .regex(/[a-z]/, "Password must contain at least one lowercase letter.")
     .regex(/[0-9]/, "Password must contain at least one number.")
     .regex(/[!@#$%^&*(),.?":{}|<>]/, "Password must contain at least one special character."),
-  phoneNumber: z.number().min(10, "phone number must be at least 10 digits"),
+  phoneNumber: z.string().min(10, "phone number must be at least 10 digits"),
   role: z.enum(["student", "recruiter"]),
   photo: z.string().optional(),
 });

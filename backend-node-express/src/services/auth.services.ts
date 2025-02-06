@@ -19,7 +19,7 @@ export const signUpUserService = async (body: SignUpSchemaType) => {
   await User.create({
     fullname,
     email,
-    phoneNumber,
+    phoneNumber: parseInt(phoneNumber),
     password: hashedPassword,
     role,
     profile: {
