@@ -1,16 +1,19 @@
 import { create } from "zustand";
 import { SignInSchemaType, SignUpSchemaType } from "../validations/auth-schema";
 import axiosInstance from "../lib/axios";
+import { UserType } from "./types";
+import { AxiosError } from "axios";
 
 type AuthState = {
   isFetching: boolean;
-  user: null;
+  user: UserType | null;
 };
 
 type AuthActionType = {
   SignupUser: (values: SignUpSchemaType) => void;
   SignInUser: (values: SignInSchemaType) => void;
   SignOutUser: () => void;
+  VerifyAuth: () => void;
 };
 
 type initialState = AuthState & AuthActionType;
@@ -46,6 +49,18 @@ export const useAuthStore = create<initialState>((set) => ({
     } catch (error) {
       set({ isFetching: false });
       console.log(error);
+    }
+  },
+  VerifyAuth: async () => {
+    set({ isFetching: true });
+    try {
+      const response = await axiosInstance.get("/user/verify");
+      set({ user: response.data.data, isFetching: false });
+    } catch (error) {
+      set({ isFetching: false, user: null });
+      if (error instanceof AxiosError) {
+        return;
+      }
     }
   },
 }));
