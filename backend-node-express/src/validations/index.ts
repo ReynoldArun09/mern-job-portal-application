@@ -1,3 +1,4 @@
 import { SignInSchema, SignInSchemaType, SignUpSchema, SignUpSchemaType } from "./auth.schema";
+import { CompanyIdSchema, CompanySchema, CompanySchemaType } from "./company-schema";
 
-export { SignInSchema, SignInSchemaType, SignUpSchema, SignUpSchemaType };
+export { CompanyIdSchema, CompanySchema, CompanySchemaType, SignInSchema, SignInSchemaType, SignUpSchema, SignUpSchemaType };

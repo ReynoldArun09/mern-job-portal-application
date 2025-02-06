@@ -7,6 +7,7 @@ import YAML from "yamljs";
 import { ParsedEnvVariables } from "./configs";
 import { ErrorHandler } from "./middlewares";
 import { authRoutes, userRoutes } from "./routes";
+import companyRoutes from "./routes/company.routes";
 
 const app: Application = express();
 const swaggerSpec = YAML.load("./src/lib/swagger.yaml");
@@ -36,6 +37,7 @@ if (ParsedEnvVariables.NODE_ENV !== "production") {
 
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/user", userRoutes);
+app.use("/api/v1/company", companyRoutes);
 app.use(ErrorHandler);
 
 export default app;
