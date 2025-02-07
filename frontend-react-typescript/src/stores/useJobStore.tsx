@@ -12,7 +12,7 @@ type JobState = {
 type JobActionState = {
   getLatestJobs: () => void;
   setSearchQuery: (query: string) => void;
-  getAllJobs: () => void;
+  getAllJobs: (query?: string) => void;
 };
 
 type initialState = JobState & JobActionState;
@@ -32,10 +32,11 @@ export const useJobStore = create<initialState>((set) => ({
     }
   },
   setSearchQuery: (query: string) => set(() => ({ searchQuery: query })),
-  getAllJobs: async () => {
+  getAllJobs: async (query: string = "") => {
     set({ loading: true });
     try {
-      const response = await axiosInstance.get("/job/all-jobs");
+      const url = query ? `/job/all-jobs?keyword=${query}` : "/job/all-jobs";
+      const response = await axiosInstance.get(url);
       set({ jobs: response.data.data, loading: false });
     } catch (error) {
       console.log(error);
