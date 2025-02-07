@@ -2,14 +2,12 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
+import { useAuthStore } from "@/stores/useAuthStore";
 import { LogOutIcon, User2 } from "lucide-react";
 import { Link } from "react-router-dom";
-import useAuth from "@/hooks/useAuth";
-import { useAuthStore } from "@/stores/useAuthStore";
 
 export default function ProfileInfo() {
-  const { user } = useAuth();
-  const { SignOutUser } = useAuthStore();
+  const { user, SignOutUser } = useAuthStore();
 
   const handleLogout = () => {
     SignOutUser();
@@ -20,7 +18,7 @@ export default function ProfileInfo() {
       <PopoverTrigger asChild>
         <Avatar className="cursor-pointer">
           <AvatarImage src={user?.profile?.profilePhoto} />
-          <AvatarFallback>{user?.fullname.slice(0, 2).toUpperCase()}</AvatarFallback>
+          <AvatarFallback>{user?.fullname?.slice(0, 2).toUpperCase()}</AvatarFallback>
         </Avatar>
       </PopoverTrigger>
       <PopoverContent className="space-y-4 w-80">
@@ -28,7 +26,7 @@ export default function ProfileInfo() {
           <div>
             <Avatar className="cursor-pointer">
               <AvatarImage src={user?.profile?.profilePhoto} />
-              <AvatarFallback>{user?.fullname.slice(0, 2).toUpperCase()}</AvatarFallback>
+              <AvatarFallback>{user?.fullname?.slice(0, 2).toUpperCase()}</AvatarFallback>
             </Avatar>
           </div>
           <div className="space-y-1">

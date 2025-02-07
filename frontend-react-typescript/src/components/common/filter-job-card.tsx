@@ -1,15 +1,16 @@
-import { Label } from "@radix-ui/react-label";
-import { useEffect, useState } from "react";
+import { Label } from "@/components/ui/label";
+import { filterData } from "@/constants";
+import { useJobStore } from "@/stores/useJobStore";
+import * as React from "react";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
-import { filterData } from "../../constants";
-import { useJobStore } from "../../stores/useJobStore";
 
-export default function FilterJobsCard() {
-  const { setSearchQuery } = useJobStore();
-  const [selectedValue, setSelectedValue] = useState("");
-  useEffect(() => {
-    setSearchQuery(selectedValue);
-  }, [selectedValue, setSearchQuery]);
+export default function FilterJobCard() {
+  const { SetSearchQuery } = useJobStore();
+  const [selectedValue, setSelectedValue] = React.useState("");
+
+  React.useEffect(() => {
+    SetSearchQuery(selectedValue);
+  }, [SetSearchQuery, selectedValue]);
 
   return (
     <section>

@@ -12,7 +12,7 @@ const jobRoutes = Router();
 
 jobRoutes.get("/latest-jobs", getLatestJobController);
 jobRoutes.post("/create-job", AuthMiddleware, createJobController);
-jobRoutes.get("/all-jobs", AuthMiddleware, getAllJobsController);
+jobRoutes.get("/all-jobs", getAllJobsController);
 jobRoutes.get("/single/:id", AuthMiddleware, getJobByIdController);
 jobRoutes.get("/admin-jobs", AuthMiddleware, getAdminJobsController);
 

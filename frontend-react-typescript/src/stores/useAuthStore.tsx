@@ -1,8 +1,8 @@
-import { create } from "zustand";
-import { SignInSchemaType, SignUpSchemaType } from "../validations/auth-schema";
-import axiosInstance from "../lib/axios";
-import { UserType } from "./types";
 import { AxiosError } from "axios";
+import { create } from "zustand";
+import axiosInstance from "../lib/axios";
+import { SignInSchemaType, SignUpSchemaType } from "../validations/auth-schema";
+import { UserType } from "./types";
 
 type AuthState = {
   isFetching: boolean;

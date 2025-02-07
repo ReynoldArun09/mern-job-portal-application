@@ -1,13 +1,13 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup } from "@/components/ui/radio-group";
+import AuthSubmitButton from "@/components/web/auth/auth-submit-button";
+import { useAuthStore } from "@/stores/useAuthStore";
 import { SignUpSchema, SignUpSchemaType } from "@/validations/auth-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ChangeEvent, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import AuthSubmitButton from "@/components/common/auth-submit-button";
-import { useAuthStore } from "@/stores/useAuthStore";
 
 export default function SignupForm() {
   const navigate = useNavigate();

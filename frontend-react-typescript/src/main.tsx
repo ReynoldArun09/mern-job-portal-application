@@ -1,22 +1,22 @@
 import { scan } from "react-scan"; // import this BEFORE react
 
-import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import "./index.css";
 import App from "./App.tsx";
+import "./index.css";
 import Providers from "./providers/index.tsx";
 
 if (typeof window !== "undefined") {
   scan({
     enabled: true,
-    // logs render info to console (default: false)
+
+    trackUnnecessaryRenders: true,
+    animationSpeed: "slow",
+    showToolbar: true,
   });
 }
 
 createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <Providers>
-      <App />
-    </Providers>
-  </StrictMode>
+  <Providers>
+    <App />
+  </Providers>
 );

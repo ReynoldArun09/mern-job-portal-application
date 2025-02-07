@@ -1,17 +1,17 @@
 import * as React from "react";
 import { AUTH_ROUTES, BASE_ROUTE, PROTECTED_ROUTES } from "./routePaths";
-import HomePage from "../../pages/site/home-page";
-import BrowsePage from "../../pages/site/browse-page";
-import JobsPage from "../../pages/site/jobs-page";
-import DescriptionPage from "../../pages/site/description-page";
-import ProfilePage from "../../pages/site/profile-page";
 
 const SigninPage = React.lazy(() => import("@/pages/auth/signin-page"));
 const SignupPage = React.lazy(() => import("@/pages/auth/signup-page"));
 const DashboardPage = React.lazy(() => import("@/pages/admin/dashboard-page"));
 const ApplicantsListPage = React.lazy(() => import("@/pages/admin/applicants-list-page"));
-const JobListPage = React.lazy(() => import("@/pages/admin/job-list-page"));
-const CompanyListPage = React.lazy(() => import("@/pages/admin/company-list-page"));
+const JobsListPage = React.lazy(() => import("@/pages/admin/jobs-list-page"));
+const CompanyListPage = React.lazy(() => import("@/pages/admin/companies-list-page"));
+const ProfilePage = React.lazy(() => import("@/pages/site/profile-page"));
+const DescriptionPage = React.lazy(() => import("@/pages/site/description-page"));
+const JobsPage = React.lazy(() => import("@/pages/site/jobs-page"));
+const BrowsePage = React.lazy(() => import("@/pages/site/browse-page"));
+const HomePage = React.lazy(() => import("@/pages/site/home-page"));
 
 export const authenticationRoutePaths = [
   { path: AUTH_ROUTES.SIGN_IN, element: <SigninPage /> },
@@ -21,7 +21,7 @@ export const authenticationRoutePaths = [
 export const protectedRoutePaths = [
   { path: PROTECTED_ROUTES.DASHBOARD, element: <DashboardPage /> },
   { path: PROTECTED_ROUTES.APPLICANTS_LIST, element: <ApplicantsListPage /> },
-  { path: PROTECTED_ROUTES.JOB_LIST, element: <JobListPage /> },
+  { path: PROTECTED_ROUTES.JOB_LIST, element: <JobsListPage /> },
   { path: PROTECTED_ROUTES.COMPANY_LIST, element: <CompanyListPage /> },
 ];
 

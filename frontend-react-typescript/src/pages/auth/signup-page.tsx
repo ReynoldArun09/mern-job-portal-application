@@ -1,7 +1,7 @@
+import SignupForm from "@/components/web/auth/signup-form";
 import Head from "@/utils/seo/head";
-import SignupForm from "@/components/web/auth/forms/signup-form";
 
-export default function SigninPage() {
+export default function SignupPage() {
   return (
     <>
       <Head title="Sign up" description="job portal application, signup page" />

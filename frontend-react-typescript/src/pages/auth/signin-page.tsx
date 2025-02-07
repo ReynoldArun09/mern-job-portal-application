@@ -1,10 +1,10 @@
+import SigninForm from "@/components/web/auth/signin-form";
 import Head from "@/utils/seo/head";
-import SigninForm from "@/components/web/auth/forms/signin-form";
 
-export default function SignupPage() {
+export default function SigninPage() {
   return (
     <>
-      <Head title="Sign in" description="job portal application, sign in page" />
+      <Head title="Sign in" description="job portal application, signin page" />
       <section className="max-w-7xl mx-auto flex items-center justify-center min-h-screen">
         <SigninForm />
       </section>

@@ -1,16 +1,13 @@
+import LoadingSpinner from "@/components/common/loading-spinner";
+import UseAuth from "@/hooks/apis/use-auth";
 import { Navigate, Outlet } from "react-router-dom";
-import useAuth from "../hooks/useAuth";
 
 export default function ProtectedRoute() {
-  const { user, isFetching } = useAuth();
+  const { user, isFetching } = UseAuth();
 
   if (isFetching) {
-    return <h1>loading...</h1>;
+    return <LoadingSpinner />;
   }
 
-  if (!user) {
-    <Navigate to="/" replace />;
-  }
-
-  return <Outlet />;
+  return user ? <Outlet /> : <Navigate to="/" replace />;
 }

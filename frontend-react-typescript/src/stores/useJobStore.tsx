@@ -3,43 +3,45 @@ import axiosInstance from "../lib/axios";
 import { JobType } from "./types";
 
 type JobState = {
-  jobs: JobType[] | null;
-  loading: boolean;
+  latestJobsData: JobType[] | null;
+  allJobsData: JobType[] | null;
+  isFetching: boolean;
   searchQuery: string;
-  alljobs: JobType[] | null;
 };
 
 type JobActionState = {
-  getLatestJobs: () => void;
-  setSearchQuery: (query: string) => void;
-  getAllJobs: (query?: string) => void;
+  GetLatestJobs: () => void;
+  SetSearchQuery: (searchQuery: string) => void;
+  GetAllJobs: (query: string) => void;
 };
 
 type initialState = JobState & JobActionState;
 
 export const useJobStore = create<initialState>((set) => ({
-  jobs: [],
+  latestJobsData: [],
+  allJobsData: [],
+  isFetching: false,
   searchQuery: "",
-  loading: false,
-  alljobs: [],
-  getLatestJobs: async () => {
-    set({ loading: true });
+  SetSearchQuery: (searchQuery: string) => set(() => ({ searchQuery })),
+  GetLatestJobs: async () => {
+    set({ isFetching: true });
     try {
       const response = await axiosInstance.get("/job/latest-jobs");
-      set({ jobs: response.data.data, loading: false });
+      set({ latestJobsData: response.data.data, isFetching: false });
     } catch (error) {
       console.log(error);
+      set({ isFetching: false });
     }
   },
-  setSearchQuery: (query: string) => set(() => ({ searchQuery: query })),
-  getAllJobs: async (query: string = "") => {
-    set({ loading: true });
+  GetAllJobs: async (query: string = "") => {
+    set({ isFetching: true });
     try {
       const url = query ? `/job/all-jobs?keyword=${query}` : "/job/all-jobs";
       const response = await axiosInstance.get(url);
-      set({ jobs: response.data.data, loading: false });
+      set({ allJobsData: response.data.data, isFetching: false });
     } catch (error) {
       console.log(error);
+      set({ isFetching: false });
     }
   },
 }));

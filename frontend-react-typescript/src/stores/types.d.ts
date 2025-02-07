@@ -1,4 +1,36 @@
+export type JobType = {
+  _id: string;
+  title: string;
+  description: string;
+  requirements: string[];
+  salary: number;
+  experienceLevel: number;
+  location: string;
+  jobType: string;
+  position: number;
+  company: {
+    _id: string;
+    name: string;
+    userId: string;
+  };
+  createdBy: string;
+  applications: ApplicationType[];
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type ApplicationType = {
+  _id: string;
+  fullname: string;
+  email: string;
+  phoneNumber: number;
+  role: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
 export type RoleType = "student" | "recruiter";
+export type StatusType = "pending" | "accepted" | "rejected";
 
 export type UserType = {
   _id: string;
@@ -18,23 +50,23 @@ export type Profile = {
   profilePhoto: string;
 };
 
-export type JobType = {
+export type CompanyType = {
   _id: string;
-  title: string;
+  name: string;
   description: string;
-  requirements: string[];
-  salary: number;
-  experienceLevel: number;
   location: string;
-  jobType: string;
-  position: number;
-  company: {
-    _id: string;
-    name: string;
-    userId: string;
-  };
-  createdBy: string;
-  applications: ApplicationType[];
+  website: string;
+  userId: string;
+  createdAt: string;
+  updatedAt: string;
+  logo?: string;
+};
+
+export type ApplicantType = {
+  _id: string;
+  job: JobType;
+  applicant: string;
+  status: StatusType;
   createdAt: string;
   updatedAt: string;
 };

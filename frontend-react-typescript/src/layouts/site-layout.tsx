@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
-import SiteHeader from "../components/web/auth/site/site-header";
-import SiteFooter from "../components/web/auth/site/site-footer";
+import SiteFooter from "../components/web/site/site-footer";
+import SiteHeader from "../components/web/site/site-header";
 
 export default function SiteLayout() {
   return (

@@ -1,45 +1,53 @@
+import BreadCrumbs from "@/components/common/bread-crumb";
+import FilterJobCard from "@/components/common/filter-job-card";
+import JobCard from "@/components/common/job-card";
+import JobCardSkeleton from "@/components/skeletons/job-card-skeleton";
+import UseAllJobs from "@/hooks/apis/use-all-jobs";
 import { useJobStore } from "@/stores/useJobStore";
-import React from "react";
-import JobCard from "../../components/common/job-card";
-import FilterJobsCard from "../../components/common/filter-jobs-card";
-import useAllJobs from "../../hooks/useAllJobs";
+import Head from "@/utils/seo/head";
+import * as React from "react";
 
 export default function JobsPage() {
-  const { jobs, searchQuery } = useJobStore();
-  const [filterJobs, setFilterJobs] = React.useState(jobs);
-  useAllJobs();
+  const { allJobsData, searchQuery } = useJobStore();
+  const { isFetching } = UseAllJobs();
+  const [filterJobs, setFilterJobs] = React.useState(allJobsData);
 
   React.useEffect(() => {
-    if (jobs) {
+    if (allJobsData) {
       if (searchQuery) {
-        const filteredData = jobs.filter((job) => {
+        const filteredData = allJobsData.filter((job) => {
           return (
             job.title.toLowerCase().includes(searchQuery.toLowerCase()) || job.location.toLowerCase().includes(searchQuery.toLowerCase())
           );
         });
         setFilterJobs(filteredData);
       } else {
-        setFilterJobs(jobs);
+        setFilterJobs(allJobsData);
       }
     }
-  }, [jobs, searchQuery]);
+  }, [allJobsData, searchQuery]);
 
   return (
-    <section>
-      <div className="flex gap-x-10">
-        <div>
-          <FilterJobsCard />
-        </div>
-        {filterJobs && filterJobs.length <= 0 ? (
-          <span className="flex items-center justify-center mx-auto text-blue-600 font-bold text-3xl">Jobs Not Found</span>
-        ) : (
-          <div className="grid lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5">
-            {filterJobs?.map((job) => (
-              <JobCard key={job._id} job={job} />
-            ))}
+    <>
+      <Head title="Jobs Page" description="job portal application, Jobs page" />
+      <BreadCrumbs />
+      <section className="py-10">
+        <div className="flex gap-x-10">
+          <div>
+            <FilterJobCard />
           </div>
-        )}
-      </div>
-    </section>
+          {filterJobs && filterJobs.length <= 0 ? (
+            <span className="flex items-center justify-center mx-auto text-blue-600 font-bold text-3xl">Jobs Not Found</span>
+          ) : (
+            <div className="grid lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5">
+              {isFetching && [...new Array(10)].map((_, index) => <JobCardSkeleton key={index} />)}
+              {filterJobs?.map((job) => (
+                <JobCard key={job._id} job={job} />
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+    </>
   );
 }
