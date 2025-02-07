@@ -4,13 +4,16 @@ import { Input } from "@/components/ui/input";
 import { SearchIcon } from "lucide-react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useJobStore } from "../../../../../stores/useJobStore";
 
 export default function SiteHero() {
   const [query, setQuery] = React.useState("");
   const navigate = useNavigate();
+  const { setSearchQuery } = useJobStore();
 
   const handleSubmit = () => {
     if (!query || query.length < 1) return;
+    setSearchQuery(query);
     navigate("/browse");
   };
 
