@@ -7,12 +7,15 @@ type AdminState = {
   adminCompaniesData: CompanyType[] | null;
   applicantsData: ApplicantType[] | null;
   isFetching: boolean;
+  singleCompanyData: CompanyType | null;
 };
 
 type AdminActionState = {
   GetAdminPostedJobs: () => void;
   GetAdminCompanies: () => void;
   GetApplicantsData: (jobId: string) => void;
+  CreateCompany: (name: string) => void;
+  FetchCompanyById: (companyId: string) => void;
 };
 
 type initialState = AdminState & AdminActionState;
@@ -22,6 +25,28 @@ export const useAdminStore = create<initialState>((set) => ({
   adminCompaniesData: [],
   applicantsData: [],
   isFetching: false,
+  singleCompanyData: null,
+  CreateCompany: async (name) => {
+    set({ isFetching: true });
+    try {
+      const response = await axiosInstance.post("/company/create-company", { name });
+      console.log(response.data);
+      set({ isFetching: false });
+    } catch (error) {
+      console.log(error);
+      set({ isFetching: false });
+    }
+  },
+  FetchCompanyById: async (companyId: string) => {
+    set({ isFetching: true });
+    try {
+      const response = await axiosInstance.get(`/company/${companyId}`);
+      set({ singleCompanyData: response.data.data, isFetching: false });
+    } catch (error) {
+      console.log(error);
+      set({ isFetching: false });
+    }
+  },
   GetAdminPostedJobs: async () => {
     set({ isFetching: true });
     try {
