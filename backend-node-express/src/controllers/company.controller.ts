@@ -17,6 +17,7 @@ import { CompanyIdSchema, CompanySchema } from "../validations";
  */
 export const registerCompanyController = AsyncWrapper(async (req: Request, res: Response) => {
   const body = CompanySchema.parse(req.body);
+
   const userId = req.ctx._id;
   const newCompany = await registerCompanyService(body, userId);
 

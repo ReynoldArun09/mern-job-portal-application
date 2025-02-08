@@ -4,16 +4,16 @@ import { AppError } from "../utils";
 import { CompanySchemaType } from "../validations";
 
 export const registerCompanyService = async (body: CompanySchemaType, userId: string) => {
-  const { companyName } = body;
+  const { name } = body;
 
-  const existingCompany = await Company.findOne({ name: companyName });
+  const existingCompany = await Company.findOne({ name: name });
 
   if (existingCompany) {
     throw new AppError(ApiErrorMessages.COMPANY_ALREADY_EXISTS, HttpStatusCode.BAD_REQUEST);
   }
 
   const newCompany = await Company.create({
-    name: companyName,
+    name,
     userId,
   });
 
