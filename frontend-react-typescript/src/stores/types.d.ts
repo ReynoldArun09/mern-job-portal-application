@@ -27,6 +27,7 @@ export type ApplicationType = {
   role: string;
   createdAt: string;
   updatedAt: string;
+  applicant: string;
 };
 
 export type RoleType = "student" | "recruiter";

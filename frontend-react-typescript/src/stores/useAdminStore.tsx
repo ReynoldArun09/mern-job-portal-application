@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import axiosInstance from "../lib/axios";
+import { JobSchemaType } from "../validations/job-schema";
 import { ApplicantType, CompanyType, JobType } from "./types";
 
 type AdminState = {
@@ -16,6 +17,7 @@ type AdminActionState = {
   GetApplicantsData: (jobId: string) => void;
   CreateCompany: (name: string) => void;
   FetchCompanyById: (companyId: string) => void;
+  CreateJob: (values: JobSchemaType) => void;
 };
 
 type initialState = AdminState & AdminActionState;
@@ -26,6 +28,17 @@ export const useAdminStore = create<initialState>((set) => ({
   applicantsData: [],
   isFetching: false,
   singleCompanyData: null,
+  CreateJob: async (values: JobSchemaType) => {
+    set({ isFetching: true });
+    try {
+      const response = await axiosInstance.post("/job/create-job", values);
+      console.log(response.data);
+      set({ isFetching: false });
+    } catch (error) {
+      console.log(error);
+      set({ isFetching: false });
+    }
+  },
   CreateCompany: async (name) => {
     set({ isFetching: true });
     try {

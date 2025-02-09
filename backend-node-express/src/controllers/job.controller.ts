@@ -9,6 +9,7 @@ import {
 } from "../services/job.services";
 import { AsyncWrapper, SendApiResponse } from "../utils";
 import { JobSchema } from "../validations";
+import { JobSchemaId } from "../validations/job.schema";
 
 export const createJobController = AsyncWrapper(async (req: Request, res: Response) => {
   const body = JobSchema.parse(req.body);
@@ -42,7 +43,7 @@ export const getAllJobsController = AsyncWrapper(async (req: Request, res: Respo
 });
 
 export const getJobByIdController = AsyncWrapper(async (req: Request, res: Response) => {
-  const jobId = req.ctx._id;
+  const jobId = JobSchemaId.parse(req.params.id);
 
   const job = await getJobByIdService(jobId);
 
