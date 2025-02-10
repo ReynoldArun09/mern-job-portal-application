@@ -5,7 +5,7 @@ export type ApplicaitonStatus = "pending" | "accepted" | "rejected";
 
 export interface Profile {
   bio: string;
-  skills: string;
+  skills: string[];
   resume: string;
   resumeOriginalName: string;
   company: mongoose.Types.ObjectId;

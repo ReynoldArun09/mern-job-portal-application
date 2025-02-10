@@ -16,7 +16,7 @@ export const applyJobService = async (userId: string, jobId: string) => {
   const existingJob = await Job.findById(jobId);
 
   if (!existingJob) {
-    throw new AppError(ApiErrorMessages.JOB_NOT_FOUND, HttpStatusCode.NOT_FOUND);
+    throw new AppError(ApiErrorMessages.JOB_NOT_FOUND, HttpStatusCode.BAD_REQUEST);
   }
 
   const newApplication = await Application.create({

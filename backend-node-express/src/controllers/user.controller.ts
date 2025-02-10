@@ -1,5 +1,5 @@
 import { type Request, type Response } from "express";
-import { ApiSuccessMessages, HttpStatusCode } from "../constants";
+import { HttpStatusCode } from "../constants";
 import { AsyncWrapper, SendApiResponse } from "../utils";
 
 /**
@@ -17,7 +17,6 @@ export const verifyUserController = AsyncWrapper(async (req: Request, res: Respo
   SendApiResponse({
     res,
     statusCode: HttpStatusCode.OK,
-    message: ApiSuccessMessages.SIGN_OUT_SUCCESS,
     data: user,
   });
 });
