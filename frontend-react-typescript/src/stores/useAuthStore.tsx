@@ -1,4 +1,5 @@
 import { AxiosError } from "axios";
+import { toast } from "sonner";
 import { create } from "zustand";
 import axiosInstance from "../lib/axios";
 import { SignInSchemaType, SignUpSchemaType } from "../validations/auth-schema";
@@ -13,7 +14,7 @@ type AuthActionType = {
   SignupUser: (values: SignUpSchemaType) => void;
   SignInUser: (values: SignInSchemaType) => void;
   SignOutUser: () => void;
-  VerifyAuth: () => void;
+  setUser: (user: UserType) => void;
 };
 
 type initialState = AuthState & AuthActionType;
@@ -26,9 +27,14 @@ export const useAuthStore = create<initialState>((set) => ({
     try {
       const response = await axiosInstance.post("/auth/signin", values);
       set({ user: response.data.data, isFetching: false });
-    } catch (error) {
+      toast.success(response.data.message);
+    } catch (error: unknown) {
       set({ isFetching: false });
-      console.log(error);
+      if (error instanceof AxiosError) {
+        toast.error(error.response?.data?.message);
+      } else {
+        toast.error("Something went wrong !!");
+      }
     }
   },
   SignupUser: async (values: SignUpSchemaType) => {
@@ -36,31 +42,31 @@ export const useAuthStore = create<initialState>((set) => ({
     try {
       const response = await axiosInstance.post("/auth/signup", values);
       set({ user: response.data.data, isFetching: false });
-    } catch (error) {
+      toast.success(response.data.message);
+      return response.data.data;
+    } catch (error: unknown) {
       set({ isFetching: false });
-      console.log(error);
+      if (error instanceof AxiosError) {
+        toast.error(error.response?.data?.message);
+      } else {
+        toast.error("Something went wrong !!");
+      }
     }
   },
   SignOutUser: async () => {
     set({ isFetching: true });
     try {
-      await axiosInstance.post("/auth/signout");
+      const response = await axiosInstance.post("/auth/signout");
       set({ user: null, isFetching: false });
-    } catch (error) {
+      toast.success(response.data.message);
+    } catch (error: unknown) {
       set({ isFetching: false });
-      console.log(error);
-    }
-  },
-  VerifyAuth: async () => {
-    set({ isFetching: true });
-    try {
-      const response = await axiosInstance.get("/user/verify");
-      set({ user: response.data.data, isFetching: false });
-    } catch (error) {
-      set({ isFetching: false, user: null });
       if (error instanceof AxiosError) {
-        return;
+        toast.error(error.response?.data?.message);
+      } else {
+        toast.error("Something went wrong !!");
       }
     }
   },
+  setUser: (user: UserType) => set(() => ({ user })),
 }));

@@ -3,9 +3,9 @@ import UseAuth from "@/hooks/apis/use-auth";
 import { Navigate, Outlet } from "react-router-dom";
 
 export default function ProtectedRoute() {
-  const { user, isFetching } = UseAuth();
+  const { user, isAuthFetching } = UseAuth();
 
-  if (isFetching) {
+  if (isAuthFetching) {
     return <LoadingSpinner />;
   }
 

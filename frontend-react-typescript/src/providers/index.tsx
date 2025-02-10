@@ -5,16 +5,19 @@ import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { HelmetProvider } from "react-helmet-async";
 import { Toaster } from "sonner";
+import AuthProvider from "../context/auth-provider";
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   return (
     <Suspense fallback={<LoadingSpinner />}>
       <ErrorBoundary fallback={<ErrorFallback />}>
         <HelmetProvider>
-          <ThemeProvider defaultTheme="dark">
-            {children}
-            <Toaster richColors />
-          </ThemeProvider>
+          <AuthProvider>
+            <ThemeProvider defaultTheme="dark">
+              {children}
+              <Toaster richColors />
+            </ThemeProvider>
+          </AuthProvider>
         </HelmetProvider>
       </ErrorBoundary>
     </Suspense>

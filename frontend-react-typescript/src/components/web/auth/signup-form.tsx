@@ -41,7 +41,6 @@ export default function SignupForm() {
   };
 
   const onSubmit: SubmitHandler<SignUpSchemaType> = (values: SignUpSchemaType) => {
-    console.log(values);
     const formatValues = {
       ...values,
       photo,

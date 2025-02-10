@@ -24,9 +24,16 @@ export default function SigninForm() {
     },
   });
 
-  const onSubmit: SubmitHandler<SignInSchemaType> = (values: SignInSchemaType) => {
-    SignInUser(values);
-    navigate("/");
+  const onSubmit: SubmitHandler<SignInSchemaType> = async (values: SignInSchemaType) => {
+    await SignInUser(values);
+
+    const currentUser = useAuthStore.getState().user;
+
+    if (!currentUser) {
+      return;
+    } else {
+      navigate("/");
+    }
   };
 
   return (
