@@ -3,7 +3,14 @@ import { create } from "zustand";
 import axiosInstance from "../lib/axios";
 import { CompanySchemaType } from "../validations/company-schema";
 import { JobSchemaType } from "../validations/job-schema";
-import { ApplicantType, CompanyType, CreateCompanyApiResponse, JobType, UpdateCompanyApiResponse } from "./types";
+import {
+  ApplicantType,
+  CompanyType,
+  CreateCompanyApiResponse,
+  CreateJobApiResponse,
+  JobType,
+  UpdateCompanyApiResponse,
+} from "./types";
 
 type AdminState = {
   adminJobsData: JobType[] | null;
@@ -19,7 +26,7 @@ type AdminActionState = {
   GetApplicantsData: (jobId: string) => void;
   CreateCompany: (name: string) => Promise<CreateCompanyApiResponse>;
   FetchCompanyById: (companyId: string) => void;
-  CreateJob: (values: JobSchemaType) => void;
+  CreateJob: (values: JobSchemaType) => Promise<CreateJobApiResponse>;
   UpdateCompany: (id: string, values: CompanySchemaType) => Promise<UpdateCompanyApiResponse>;
 };
 
@@ -31,17 +38,6 @@ export const useAdminStore = create<initialState>((set) => ({
   applicantsData: [],
   isFetching: false,
   singleCompanyData: null,
-  CreateJob: async (values: JobSchemaType) => {
-    set({ isFetching: true });
-    try {
-      const response = await axiosInstance.post("/job/create-job", values);
-      console.log(response.data);
-      set({ isFetching: false });
-    } catch (error) {
-      console.log(error);
-      set({ isFetching: false });
-    }
-  },
 
   FetchCompanyById: async (companyId: string) => {
     set({ isFetching: true });
@@ -103,6 +99,20 @@ export const useAdminStore = create<initialState>((set) => ({
     set({ isFetching: true });
     try {
       const response = await axiosInstance.post("/company/create-company", { name });
+      set({ isFetching: false });
+      return response.data;
+    } catch (error) {
+      set({ isFetching: false });
+      if (error instanceof AxiosError) {
+        return error.response?.data?.message || "Something went wrong while updating company details.";
+      }
+      throw error;
+    }
+  },
+  CreateJob: async (values: JobSchemaType): Promise<CreateJobApiResponse> => {
+    set({ isFetching: true });
+    try {
+      const response = await axiosInstance.post("/job/create-job", values);
       set({ isFetching: false });
       return response.data;
     } catch (error) {

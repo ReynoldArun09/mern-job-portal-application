@@ -79,3 +79,9 @@ export type CreateCompanyApiResponse = {
   message: string;
   success: boolean;
 };
+
+export type CreateJobApiResponse = {
+  data: JobType;
+  message: string;
+  success: boolean;
+};
