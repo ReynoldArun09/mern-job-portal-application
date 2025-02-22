@@ -1,0 +1,47 @@
+services:
+  mongo-db:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    container_name: mongo-db
+    volumes:
+      - mongo-db:/data/db
+
+  jp-backend:
+    build:
+      context: ./backend-node-express
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./backend-node-express:/app
+      - /app/node_modules
+    container_name: jp-backend
+    env_file:
+      - ./backend-node-express/.env
+    command: /bin/sh -c "pnpm run seed && pnpm dev"
+    restart: always
+    depends_on:
+      - mongo-db
+
+  jp-frontend:
+    build:
+      context: ./frontend-react-typescript
+      dockerfile: Dockerfile.dev
+    ports:
+      - "5173:5173"
+    container_name: jp-frontend
+    env_file:
+      - ./frontend-react-typescript/.env
+    volumes:
+      - ./frontend-react-typescript:/app
+      - /app/node_modules
+    command: pnpm dev
+    restart: always
+    depends_on:
+      - jp-backend
+      - mongo-db
+
+volumes:
+  mongo-db:
+    name: mongo-db
