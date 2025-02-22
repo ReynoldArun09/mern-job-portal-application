@@ -57,7 +57,7 @@ export const getJobByIdController = AsyncWrapper(async (req: Request, res: Respo
 export const getAdminJobsController = AsyncWrapper(async (req: Request, res: Response) => {
   const adminId = req.ctx._id;
 
-  const adminJobs = await getAdminJobsService(adminId);
+  const { adminJobs } = await getAdminJobsService(adminId);
 
   SendApiResponse({
     res,

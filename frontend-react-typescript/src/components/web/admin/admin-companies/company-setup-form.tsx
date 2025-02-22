@@ -8,12 +8,14 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import { useAdminStore } from "@/stores/useAdminStore";
+import { AxiosError } from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "sonner";
 
 export default function CompanySetupForm() {
   const navigate = useNavigate();
-  const { FetchCompanyById, singleCompanyData, isFetching } = useAdminStore();
-  const [photo, setPhoto] = useState("");
+  const { FetchCompanyById, singleCompanyData, isFetching, UpdateCompany } = useAdminStore();
+  const [logo, setLogo] = useState("");
   const { id } = useParams<{ id: string }>();
   const [companyDetails, setCompanyDetails] = useState({
     name: "",
@@ -59,14 +61,31 @@ export default function CompanySetupForm() {
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {
-        setPhoto(reader.result as string);
+        setLogo(reader.result as string);
       };
       reader.readAsDataURL(file);
     }
   };
 
-  const onSubmit: SubmitHandler<CompanySchemaType> = (values: CompanySchemaType) => {
-    // (values);
+  const onSubmit: SubmitHandler<CompanySchemaType> = async (values: CompanySchemaType) => {
+    if (!id) return;
+    const Inputvalues = {
+      name: values.name,
+      location: values.location,
+      description: values.description,
+      website: values.website,
+      logo,
+    };
+    try {
+      const result = await UpdateCompany(id, Inputvalues);
+      toast.success(`Company ${result.name} sucessfully updated!!!`);
+      navigate("/admin/companies");
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        toast.error(error?.response?.data.message);
+      }
+      toast.error("Something went wrong while updating company details");
+    }
   };
 
   return (

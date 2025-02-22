@@ -71,3 +71,11 @@ export type ApplicantType = {
   createdAt: string;
   updatedAt: string;
 };
+
+export type UpdateCompanyApiResponse = CompanyType;
+
+export type CreateCompanyApiResponse = {
+  data: CompanyType;
+  message: string;
+  success: boolean;
+};

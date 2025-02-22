@@ -1,8 +1,13 @@
 import { type Request, type Response } from "express";
 import { ApiSuccessMessages, HttpStatusCode } from "../constants";
-import { getCompaniesByCurrentUserService, getCompanyByIdService, registerCompanyService } from "../services/company.services";
+import {
+  getCompaniesByCurrentUserService,
+  getCompanyByIdService,
+  registerCompanyService,
+  updateCompanyService,
+} from "../services/company.services";
 import { AsyncWrapper, SendApiResponse } from "../utils";
-import { CompanyIdSchema, CompanySchema } from "../validations";
+import { CompanyIdSchema, CompanySchema, UpdateCompanySchema } from "../validations";
 
 /**
  * Controller function to handle company registration requests.
@@ -65,6 +70,28 @@ export const getCompanyByIdController = AsyncWrapper(async (req: Request, res: R
   const companyId = CompanyIdSchema.parse(req.params.id);
 
   const { company } = await getCompanyByIdService(companyId);
+
+  SendApiResponse({
+    res,
+    statusCode: HttpStatusCode.OK,
+    data: company,
+  });
+});
+
+/**
+ * Controller function to update a company by its ID.
+ * This function validates the company data from the request parameters,
+ * invokes the updateCompanyService to update the company details,
+ * and sends a success response with the new updated company data.
+ *
+ * @param req - The request object containing the company data in the body.
+ * @param res - The response object used to send the API response.
+ * @returns A success response with the new company data.
+ */
+export const updateCompanyController = AsyncWrapper(async (req: Request, res: Response) => {
+  const companyId = CompanyIdSchema.parse(req.params.id);
+  const body = UpdateCompanySchema.parse(req.body);
+  const { company } = await updateCompanyService(companyId, body);
 
   SendApiResponse({
     res,

@@ -1,7 +1,9 @@
+import { AxiosError } from "axios";
 import { create } from "zustand";
 import axiosInstance from "../lib/axios";
+import { CompanySchemaType } from "../validations/company-schema";
 import { JobSchemaType } from "../validations/job-schema";
-import { ApplicantType, CompanyType, JobType } from "./types";
+import { ApplicantType, CompanyType, CreateCompanyApiResponse, JobType, UpdateCompanyApiResponse } from "./types";
 
 type AdminState = {
   adminJobsData: JobType[] | null;
@@ -15,9 +17,10 @@ type AdminActionState = {
   GetAdminPostedJobs: () => void;
   GetAdminCompanies: () => void;
   GetApplicantsData: (jobId: string) => void;
-  CreateCompany: (name: string) => void;
+  CreateCompany: (name: string) => Promise<CreateCompanyApiResponse>;
   FetchCompanyById: (companyId: string) => void;
   CreateJob: (values: JobSchemaType) => void;
+  UpdateCompany: (id: string, values: CompanySchemaType) => Promise<UpdateCompanyApiResponse>;
 };
 
 type initialState = AdminState & AdminActionState;
@@ -39,17 +42,7 @@ export const useAdminStore = create<initialState>((set) => ({
       set({ isFetching: false });
     }
   },
-  CreateCompany: async (name) => {
-    set({ isFetching: true });
-    try {
-      const response = await axiosInstance.post("/company/create-company", { name });
-      console.log(response.data);
-      set({ isFetching: false });
-    } catch (error) {
-      console.log(error);
-      set({ isFetching: false });
-    }
-  },
+
   FetchCompanyById: async (companyId: string) => {
     set({ isFetching: true });
     try {
@@ -64,6 +57,8 @@ export const useAdminStore = create<initialState>((set) => ({
     set({ isFetching: true });
     try {
       const response = await axiosInstance.get("/job/admin-jobs");
+      console.log(response.data.data);
+
       set({ adminJobsData: response.data.data, isFetching: false });
     } catch (error) {
       console.log(error);
@@ -88,6 +83,34 @@ export const useAdminStore = create<initialState>((set) => ({
     } catch (error) {
       console.log(error);
       set({ isFetching: false });
+    }
+  },
+  UpdateCompany: async (id: string, values: CompanySchemaType): Promise<UpdateCompanyApiResponse> => {
+    set({ isFetching: true });
+    try {
+      const response = await axiosInstance.put(`/company/update-company/${id}`, values);
+      set({ isFetching: false });
+      return response.data.data;
+    } catch (error) {
+      set({ isFetching: false });
+      if (error instanceof AxiosError) {
+        return error.response?.data?.message || "Something went wrong while creating company.";
+      }
+      throw error;
+    }
+  },
+  CreateCompany: async (name: string): Promise<CreateCompanyApiResponse> => {
+    set({ isFetching: true });
+    try {
+      const response = await axiosInstance.post("/company/create-company", { name });
+      set({ isFetching: false });
+      return response.data;
+    } catch (error) {
+      set({ isFetching: false });
+      if (error instanceof AxiosError) {
+        return error.response?.data?.message || "Something went wrong while updating company details.";
+      }
+      throw error;
     }
   },
 }));
