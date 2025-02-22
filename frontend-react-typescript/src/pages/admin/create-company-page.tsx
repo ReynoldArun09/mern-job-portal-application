@@ -16,6 +16,7 @@ export default function CreateCompanyPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+      if (!companyName) return;
       const result = await CreateCompany(companyName);
       toast.success(result.message);
       navigate("/admin/companies");

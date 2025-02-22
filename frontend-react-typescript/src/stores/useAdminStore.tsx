@@ -75,7 +75,7 @@ export const useAdminStore = create<initialState>((set) => ({
     set({ isFetching: true });
     try {
       const response = await axiosInstance.get(`/application/${jobId}/applicants`);
-      set({ applicantsData: response.data.data, isFetching: false });
+      set({ applicantsData: response.data.data.applications, isFetching: false });
     } catch (error) {
       console.log(error);
       set({ isFetching: false });

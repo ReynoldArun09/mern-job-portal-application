@@ -66,7 +66,19 @@ export type CompanyType = {
 export type ApplicantType = {
   _id: string;
   job: JobType;
-  applicant: string;
+  applicant: {
+    _id: string;
+    email: string;
+    fullname: string;
+    phoneNumber: string;
+    profile: {
+      bio: string;
+      skills: [];
+      resume: string;
+    };
+    role: string;
+    updatedAt: string;
+  };
   status: StatusType;
   createdAt: string;
   updatedAt: string;

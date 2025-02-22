@@ -58,7 +58,7 @@ export const getApplicantsService = async (jobId: string) => {
     },
   });
   if (!job) {
-    throw new AppError(ApiErrorMessages.JOB_NOT_FOUND, HttpStatusCode.NOT_FOUND);
+    throw new AppError(ApiErrorMessages.JOB_NOT_FOUND, HttpStatusCode.BAD_REQUEST);
   }
 
   return job;

@@ -2,7 +2,10 @@ import { JobType } from "@/stores/types";
 import { ColumnDef } from "@tanstack/react-table";
 import JobsOptions from "./job-options";
 
-type AdminJobsProps = Pick<JobType, "company" | "_id" | "salary" | "position" | "createdAt" | "title" | "applications" | "description">;
+type AdminJobsProps = Pick<
+  JobType,
+  "company" | "_id" | "salary" | "position" | "createdAt" | "title" | "applications" | "description"
+>;
 
 export const JobsColumn: ColumnDef<AdminJobsProps>[] = [
   {
@@ -36,8 +39,8 @@ export const JobsColumn: ColumnDef<AdminJobsProps>[] = [
     enableHiding: false,
     header: "Actions",
     cell: ({ row }) => {
-      const companyId = row.original.company._id;
-      return <JobsOptions id={companyId} />;
+      const jobId = row.original._id;
+      return <JobsOptions id={jobId} />;
     },
   },
   {

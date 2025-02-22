@@ -7,9 +7,12 @@ export default function ApplicantsListPage() {
   const { id } = useParams<{ id: string }>();
 
   const { applicantsData } = useAdminApplicants(id!);
+
+  console.log(applicantsData);
+
   return (
     <section>
-      <DataTable columns={ApplicantsColumn} data={applicantsData ?? []} filterName="fullname" />
+      <DataTable columns={ApplicantsColumn} data={applicantsData ?? []} filterName="status" />
     </section>
   );
 }
