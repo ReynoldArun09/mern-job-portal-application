@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "dev": "ts-node-dev --poll --files src/index.ts",
-    "build": "tsc && cp /package.json ./dist",
+    "build": "tsc",
     "start": "node dist/index.js",
     "test": "jest --watchAll --detectOpenHandles",
     "seed": "ts-node-dev src/seeders/seed.ts"
