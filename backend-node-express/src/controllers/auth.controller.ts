@@ -44,7 +44,7 @@ export const signInUserController = AsyncWrapper(async (req: Request, res: Respo
   res.cookie("accessToken", token, {
     httpOnly: true,
     secure: ParsedEnvVariables.NODE_ENV === "production",
-    sameSite: "strict",
+    sameSite: ParsedEnvVariables.NODE_ENV === "production" ? "none" : "strict",
     maxAge: 24 * 60 * 60 * 1000,
   });
 
