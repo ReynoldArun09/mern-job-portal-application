@@ -4,7 +4,6 @@ export const AUTH_ROUTES = {
 };
 
 export const PROTECTED_ROUTES = {
-  DASHBOARD: "/admin/dashboard",
   APPLICANTS_LIST: "/admin/jobs/:id/applicants",
   COMPANY_LIST: "/admin/companies",
   JOB_LIST: "/admin/jobs",

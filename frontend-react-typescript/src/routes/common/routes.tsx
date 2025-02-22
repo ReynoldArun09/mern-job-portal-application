@@ -3,7 +3,6 @@ import { AUTH_ROUTES, BASE_ROUTE, PROTECTED_ROUTES } from "./routePaths";
 
 const SigninPage = React.lazy(() => import("@/pages/auth/signin-page"));
 const SignupPage = React.lazy(() => import("@/pages/auth/signup-page"));
-const DashboardPage = React.lazy(() => import("@/pages/admin/dashboard-page"));
 const ApplicantsListPage = React.lazy(() => import("@/pages/admin/applicants-list-page"));
 const JobsListPage = React.lazy(() => import("@/pages/admin/jobs-list-page"));
 const CompanyListPage = React.lazy(() => import("@/pages/admin/companies-list-page"));
@@ -22,7 +21,6 @@ export const authenticationRoutePaths = [
 ];
 
 export const protectedRoutePaths = [
-  { path: PROTECTED_ROUTES.DASHBOARD, element: <DashboardPage /> },
   { path: PROTECTED_ROUTES.APPLICANTS_LIST, element: <ApplicantsListPage /> },
   { path: PROTECTED_ROUTES.JOB_LIST, element: <JobsListPage /> },
   { path: PROTECTED_ROUTES.COMPANY_LIST, element: <CompanyListPage /> },

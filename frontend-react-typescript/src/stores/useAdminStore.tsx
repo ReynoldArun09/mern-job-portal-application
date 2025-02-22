@@ -53,8 +53,6 @@ export const useAdminStore = create<initialState>((set) => ({
     set({ isFetching: true });
     try {
       const response = await axiosInstance.get("/job/admin-jobs");
-      console.log(response.data.data);
-
       set({ adminJobsData: response.data.data, isFetching: false });
     } catch (error) {
       console.log(error);

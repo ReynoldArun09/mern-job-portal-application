@@ -8,8 +8,6 @@ export default function ApplicantsListPage() {
 
   const { applicantsData } = useAdminApplicants(id!);
 
-  console.log(applicantsData);
-
   return (
     <section>
       <DataTable columns={ApplicantsColumn} data={applicantsData ?? []} filterName="status" />
