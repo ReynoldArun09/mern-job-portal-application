@@ -5,7 +5,7 @@ import { categories } from "@/constants";
 export default function SiteCarousel() {
   return (
     <section>
-      <Carousel className="w-full max-w-xl mx-auto my-20">
+      <Carousel className="max-w-[400px] lg:max-w-5xl mx-auto my-20">
         <CarouselContent>
           {categories.map((category) => (
             <CarouselItem className="md:basis-1/2 lg:basis-1/3" key={category}>

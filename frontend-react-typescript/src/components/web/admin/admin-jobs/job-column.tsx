@@ -40,7 +40,8 @@ export const JobsColumn: ColumnDef<AdminJobsProps>[] = [
     header: "Actions",
     cell: ({ row }) => {
       const jobId = row.original._id;
-      return <JobsOptions id={jobId} />;
+      const appCount = row.original.applications?.length;
+      return appCount > 0 ? <JobsOptions id={jobId} /> : null;
     },
   },
   {

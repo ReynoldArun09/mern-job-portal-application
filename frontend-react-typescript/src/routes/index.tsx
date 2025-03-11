@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import AdminLayout from "../layouts/admin-layout";
 import AuthLayout from "../layouts/auth-layout";
 import SiteLayout from "../layouts/site-layout";
+import NotFoundPage from "../pages/site/not-found-page";
 import AuthRoute from "./auth-route";
 import { authenticationRoutePaths, baseRoutePath, protectedRoutePaths } from "./common/routes";
 import ProtectedRoute from "./protected-route";
@@ -31,6 +32,7 @@ export default function AppRoutes() {
             ))}
           </Route>
         </Route>
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
   );

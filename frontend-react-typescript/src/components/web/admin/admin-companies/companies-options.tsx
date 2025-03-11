@@ -20,15 +20,9 @@ export default function CompaniesOptions({ id }: { id: string }) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => navigate(`/admin/companies/${id}`)}>
-          Edit
-        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => navigate(`/admin/companies/${id}`)}>Edit</DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem
-          onClick={() => navigate(`/admin/jobs/${id}/applicants`)}
-        >
-          Applicants
-        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => navigate(`/admin/jobs/${id}/applicants`)}>Applicants</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

@@ -3,7 +3,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Ellipsis } from "lucide-react";
@@ -20,8 +19,6 @@ export default function JobsOptions({ id }: { id: string }) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => navigate(`/admin/companies/${id}`)}>Edit</DropdownMenuItem>
-        <DropdownMenuSeparator />
         <DropdownMenuItem onClick={() => navigate(`/admin/jobs/${id}/applicants`)}>Applicants</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

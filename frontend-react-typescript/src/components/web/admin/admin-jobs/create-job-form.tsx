@@ -68,7 +68,7 @@ export default function CreateJobForm() {
     try {
       const result = await CreateJob(InputValues);
       toast.success(result.message);
-      navigate("/admin/companies");
+      navigate("/admin/jobs");
     } catch (error: unknown) {
       if (error instanceof AxiosError) {
         toast.error(error?.response?.data.message);

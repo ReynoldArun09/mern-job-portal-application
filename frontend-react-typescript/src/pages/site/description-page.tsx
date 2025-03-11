@@ -7,6 +7,7 @@ import { useJobStore } from "@/stores/useJobStore";
 import Head from "@/utils/seo/head";
 import * as React from "react";
 import { useParams } from "react-router-dom";
+import { toast } from "sonner";
 
 export default function DescriptionPage() {
   const { GetSingleJob, singleJob, ApplyJob } = useJobStore();
@@ -24,6 +25,10 @@ export default function DescriptionPage() {
   const handleSubmit = () => {
     if (!id) return;
     if (isApplied) return;
+    if (user?.role === "recruiter") {
+      toast.error("Recruiter cannot apply for job.");
+      return;
+    }
     ApplyJob(id);
   };
 
