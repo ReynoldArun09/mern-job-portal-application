@@ -6,6 +6,7 @@ interface CompanyDataType {
   name: string;
   website: string;
   location: string;
+  createdAt: string;
 }
 
 export const CompaniesColumn: ColumnDef<CompanyDataType>[] = [
@@ -22,8 +23,13 @@ export const CompaniesColumn: ColumnDef<CompanyDataType>[] = [
     header: "Location",
   },
   {
-    accessorKey: "createdAt",
-    header: "Date",
+    id: "date",
+    enableHiding: false,
+    header: "Created Date",
+    cell: ({ row }) => {
+      const date = new Date(row.original.createdAt);
+      return date.toLocaleDateString();
+    },
   },
   {
     id: "actions",

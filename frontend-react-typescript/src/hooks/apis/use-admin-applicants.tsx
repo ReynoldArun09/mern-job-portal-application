@@ -1,8 +1,10 @@
-import { useAdminStore } from "@/stores/useAdminStore";
+import { useAdminActions, useAdminLoading, useApplicantsData } from "@/stores/useAdminStore";
 import * as React from "react";
 
 export default function useAdminApplicants(jobId: string) {
-  const { isFetching, GetApplicantsData, applicantsData } = useAdminStore();
+  const applicantsData = useApplicantsData();
+  const isFetching = useAdminLoading();
+  const { GetApplicantsData } = useAdminActions();
 
   React.useEffect(() => {
     GetApplicantsData(jobId);

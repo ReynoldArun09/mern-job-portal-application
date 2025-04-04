@@ -2,7 +2,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup } from "@/components/ui/radio-group";
 import AuthSubmitButton from "@/components/web/auth/auth-submit-button";
-import { useAuthStore } from "@/stores/useAuthStore";
+import { useAuthActions, useAuthLoading, useAuthStore } from "@/stores/useAuthStore";
 import { SignInSchema, SignInSchemaType } from "@/validations/auth-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -10,7 +10,8 @@ import { useNavigate } from "react-router-dom";
 
 export default function SigninForm() {
   const navigate = useNavigate();
-  const { isFetching, SignInUser } = useAuthStore();
+  const isFetching = useAuthLoading();
+  const { SignInUser } = useAuthActions();
   const {
     register,
     handleSubmit,

@@ -6,15 +6,17 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowLeft, Loader2 } from "lucide-react";
 import { ChangeEvent, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-
-import { useAdminStore } from "@/stores/useAdminStore";
+import { useAdminActions, useAdminLoading, useSingleCompanyData } from "@/stores/useAdminStore";
 import { AxiosError } from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 
 export default function CompanySetupForm() {
   const navigate = useNavigate();
-  const { FetchCompanyById, singleCompanyData, isFetching, UpdateCompany } = useAdminStore();
+  const isFetching = useAdminLoading();
+  const singleCompanyData = useSingleCompanyData();
+  const { FetchCompanyById, UpdateCompany } = useAdminActions();
+
   const [logo, setLogo] = useState("");
   const { id } = useParams<{ id: string }>();
   const [companyDetails, setCompanyDetails] = useState({

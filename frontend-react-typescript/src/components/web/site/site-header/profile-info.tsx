@@ -2,12 +2,14 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
-import { useAuthStore } from "@/stores/useAuthStore";
+import { useAuthActions, useUserData } from "@/stores/useAuthStore";
 import { LogOutIcon, User2 } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function ProfileInfo() {
-  const { user, SignOutUser } = useAuthStore();
+  const { SignOutUser } = useAuthActions();
+
+  const user = useUserData();
 
   const handleLogout = () => {
     SignOutUser();

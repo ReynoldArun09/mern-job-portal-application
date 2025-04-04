@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useAdminStore } from "@/stores/useAdminStore";
-import { useAuthStore } from "@/stores/useAuthStore";
+import { useAdminActions, useAdminCompaniesData, useAdminLoading } from "@/stores/useAdminStore";
+import { useUserData } from "@/stores/useAuthStore";
 import { JobSchema, JobSchemaType } from "@/validations/job-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AxiosError } from "axios";
@@ -22,8 +22,10 @@ import {
 
 export default function CreateJobForm() {
   const navigate = useNavigate();
-  const { isFetching, CreateJob, adminCompaniesData, GetAdminCompanies } = useAdminStore();
-  const { user } = useAuthStore();
+  const user = useUserData();
+  const isFetching = useAdminLoading();
+  const adminCompaniesData = useAdminCompaniesData();
+  const { CreateJob, GetAdminCompanies } = useAdminActions();
   const {
     register,
     handleSubmit,
@@ -45,11 +47,9 @@ export default function CreateJobForm() {
   });
 
   useEffect(() => {
-    if (adminCompaniesData && adminCompaniesData?.length === 0) {
-      GetAdminCompanies();
-    }
+    GetAdminCompanies();
     return;
-  }, [GetAdminCompanies, adminCompaniesData]);
+  }, [GetAdminCompanies]);
 
   const { fields, append, remove } = useFieldArray({
     control,

@@ -1,6 +1,12 @@
 import SiteLogo from "@/components/common/site-logo";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import {
   Sidebar,
   SidebarContent,
@@ -13,7 +19,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { adminSidebarLinks } from "@/constants";
-import { useAuthStore } from "@/stores/useAuthStore";
+import { useUserData } from "@/stores/useAuthStore";
 import { EllipsisIcon, LogOut } from "lucide-react";
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
@@ -22,7 +28,7 @@ import LogoutDialog from "./logout-dialog";
 export default function AdminSidebar() {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
-  const { user } = useAuthStore();
+  const user = useUserData();
 
   const pathname = location.pathname;
   return (

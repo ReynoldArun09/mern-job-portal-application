@@ -1,10 +1,12 @@
-import { useJobStore } from "@/stores/useJobStore";
-import * as React from "react";
+import { useJobFetching, useJobsActions, useLatestJobData } from "@/stores/useJobStore";
+import { useEffect } from "react";
 
 export default function UseLatestJobs() {
-  const { isFetching, GetLatestJobs, latestJobsData } = useJobStore();
+  const latestJobsData = useLatestJobData();
+  const isFetching = useJobFetching();
+  const { GetLatestJobs } = useJobsActions();
 
-  React.useEffect(() => {
+  useEffect(() => {
     GetLatestJobs();
   }, [GetLatestJobs]);
 

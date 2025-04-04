@@ -2,7 +2,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup } from "@/components/ui/radio-group";
 import AuthSubmitButton from "@/components/web/auth/auth-submit-button";
-import { useAuthStore } from "@/stores/useAuthStore";
+import { useAuthActions, useAuthLoading } from "@/stores/useAuthStore";
 import { SignUpSchema, SignUpSchemaType } from "@/validations/auth-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ChangeEvent, useState } from "react";
@@ -12,7 +12,8 @@ import { useNavigate } from "react-router-dom";
 export default function SignupForm() {
   const navigate = useNavigate();
   const [photo, setPhoto] = useState("");
-  const { isFetching, SignupUser } = useAuthStore();
+  const isFetching = useAuthLoading();
+  const { SignupUser } = useAuthActions();
   const {
     register,
     handleSubmit,

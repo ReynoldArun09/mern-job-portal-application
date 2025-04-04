@@ -1,10 +1,12 @@
-import { useJobStore } from "@/stores/useJobStore";
-import * as React from "react";
+import { useAllJobData, useJobFetching, useJobsActions } from "@/stores/useJobStore";
+import { useEffect } from "react";
 
 export default function UseAllJobs(query?: string) {
-  const { isFetching, GetAllJobs, allJobsData } = useJobStore();
+  const allJobsData = useAllJobData();
+  const isFetching = useJobFetching();
+  const { GetAllJobs } = useJobsActions();
 
-  React.useEffect(() => {
+  useEffect(() => {
     GetAllJobs(query ?? "");
   }, [GetAllJobs, query]);
 

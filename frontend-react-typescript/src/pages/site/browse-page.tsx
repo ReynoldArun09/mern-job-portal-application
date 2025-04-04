@@ -2,12 +2,12 @@ import BreadCrumbs from "@/components/common/bread-crumb";
 import JobCard from "@/components/common/job-card";
 import JobCardSkeleton from "@/components/skeletons/job-card-skeleton";
 import UseAllJobs from "@/hooks/apis/use-all-jobs";
-import { useJobStore } from "@/stores/useJobStore";
 import Head from "@/utils/seo/head";
+import useSearchQuery from "@/hooks/useSearchQuery";
 
 export default function BrowsePage() {
-  const { searchQuery } = useJobStore();
-  const { isFetching, allJobsData } = UseAllJobs(searchQuery);
+  const { search } = useSearchQuery();
+  const { isFetching, allJobsData } = UseAllJobs(search ?? "");
 
   return (
     <>

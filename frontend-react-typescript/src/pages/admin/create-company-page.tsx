@@ -3,16 +3,17 @@ import { AxiosError } from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { Button } from "../../components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../components/ui/card";
-import { Input } from "../../components/ui/input";
-import { useAdminStore } from "../../stores/useAdminStore";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { useAdminActions } from "@/stores/useAdminStore";
+import Head from "../../utils/seo/head";
 
 export default function CreateCompanyPage() {
   const [companyName, setCompanyName] = useState("");
   const navigate = useNavigate();
 
-  const { CreateCompany } = useAdminStore();
+  const { CreateCompany } = useAdminActions();
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -29,30 +30,34 @@ export default function CreateCompanyPage() {
   };
 
   return (
-    <section className="flex items-center justify-center min-h-[70vh]">
-      <Card className="w-[600px]">
-        <CardHeader className="space-y-5">
-          <CardTitle className="text-3xl font-bold text-center">Create Your Company</CardTitle>
-          <CardDescription className="text-md">
-            What would you like to give your company name? you can change this later.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-5">
-            <Label className="font-bold">Company Name</Label>
-            <Input
-              placeholder="facebook, microsoft, linkedin"
-              value={companyName}
-              onChange={(e) => setCompanyName(e.target.value)}
-            />
-            <div className="flex items-center gap-5">
-              <Button className="w-full" type="submit" onClick={handleSubmit}>
-                Submit
-              </Button>
+    <>
+      <Head title="Create Company" description="job portal application, create company page" />
+
+      <section className="flex items-center justify-center min-h-[70vh]">
+        <Card className="w-[600px]">
+          <CardHeader className="space-y-5">
+            <CardTitle className="text-3xl font-bold text-center">Create Your Company</CardTitle>
+            <CardDescription className="text-md">
+              What would you like to give your company name? you can change this later.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-5">
+              <Label className="font-bold">Company Name</Label>
+              <Input
+                placeholder="facebook, microsoft, linkedin"
+                value={companyName}
+                onChange={(e) => setCompanyName(e.target.value)}
+              />
+              <div className="flex items-center gap-5">
+                <Button className="w-full" type="submit" onClick={handleSubmit}>
+                  Submit
+                </Button>
+              </div>
             </div>
-          </div>
-        </CardContent>
-      </Card>
-    </section>
+          </CardContent>
+        </Card>
+      </section>
+    </>
   );
 }

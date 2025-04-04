@@ -1,6 +1,13 @@
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { useAuthStore } from "@/stores/useAuthStore";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { useAuthActions, useAuthLoading } from "@/stores/useAuthStore";
 import { Loader } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -11,7 +18,8 @@ interface LogoutDialogProps {
 
 const LogoutDialog = ({ isOpen, setIsOpen }: LogoutDialogProps) => {
   const navigate = useNavigate();
-  const { isFetching, SignOutUser } = useAuthStore();
+  const isFetching = useAuthLoading();
+  const { SignOutUser } = useAuthActions();
   const handleLogout = () => {
     if (isFetching) return;
     SignOutUser();

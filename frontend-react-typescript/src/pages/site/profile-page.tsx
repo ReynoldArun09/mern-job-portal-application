@@ -1,3 +1,9 @@
+import Head from "../../utils/seo/head";
+
 export default function ProfilePage() {
-  return <div>ProfilePage</div>;
+  return (
+    <>
+      <Head title="Profile Page" description="job portal application, profile page" />
+    </>
+  );
 }

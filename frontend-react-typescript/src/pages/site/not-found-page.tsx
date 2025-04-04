@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import Head from "../../utils/seo/head";
 
 export default function NotFoundPage() {
   const navigate = useNavigate();
@@ -15,8 +16,11 @@ export default function NotFoundPage() {
   }, [location.state, location.state?.from, navigate]);
 
   return (
-    <section className="flex items-center justify-center min-h-screen">
-      <h1 className="font-bold sm:text-xl md:text-2xl lg:text-4xl">Page Not Found</h1>
-    </section>
+    <>
+      <Head title="Page Not Found" description="job portal application, 404 page" />
+      <section className="flex items-center justify-center min-h-screen">
+        <h1 className="font-bold sm:text-xl md:text-2xl lg:text-4xl">Page Not Found</h1>
+      </section>
+    </>
   );
 }

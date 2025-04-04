@@ -2,20 +2,21 @@ import BreadCrumbs from "@/components/common/bread-crumb";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { useAuthStore } from "@/stores/useAuthStore";
-import { useJobStore } from "@/stores/useJobStore";
+import { useUserData } from "@/stores/useAuthStore";
+import { useJobsActions, useSingleJob } from "@/stores/useJobStore";
 import Head from "@/utils/seo/head";
-import * as React from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "sonner";
 
 export default function DescriptionPage() {
-  const { GetSingleJob, singleJob, ApplyJob } = useJobStore();
-  const { user } = useAuthStore();
+  const { GetSingleJob, ApplyJob } = useJobsActions();
+  const singleJob = useSingleJob();
+  const user = useUserData();
   const userId = user?._id;
   const { id } = useParams<{ id: string }>();
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!id) return;
     GetSingleJob(id);
   }, [GetSingleJob, id]);

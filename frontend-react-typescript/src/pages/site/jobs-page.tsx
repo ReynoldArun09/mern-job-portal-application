@@ -3,21 +3,22 @@ import FilterJobCard from "@/components/common/filter-job-card";
 import JobCard from "@/components/common/job-card";
 import JobCardSkeleton from "@/components/skeletons/job-card-skeleton";
 import UseAllJobs from "@/hooks/apis/use-all-jobs";
-import { useJobStore } from "@/stores/useJobStore";
 import Head from "@/utils/seo/head";
 import * as React from "react";
+import useFilterQuery from "@/hooks/useFilterQuery";
 
 export default function JobsPage() {
-  const { allJobsData, searchQuery } = useJobStore();
-  const { isFetching } = UseAllJobs();
+  const { isFetching, allJobsData } = UseAllJobs();
   const [filterJobs, setFilterJobs] = React.useState(allJobsData);
+  const { filter } = useFilterQuery();
 
   React.useEffect(() => {
     if (allJobsData) {
-      if (searchQuery) {
+      if (filter) {
         const filteredData = allJobsData.filter((job) => {
           return (
-            job.title.toLowerCase().includes(searchQuery.toLowerCase()) || job.location.toLowerCase().includes(searchQuery.toLowerCase())
+            job.title.toLowerCase().includes(filter.toLowerCase()) ||
+            job.location.toLowerCase().includes(filter.toLowerCase())
           );
         });
         setFilterJobs(filteredData);
@@ -25,7 +26,7 @@ export default function JobsPage() {
         setFilterJobs(allJobsData);
       }
     }
-  }, [allJobsData, searchQuery]);
+  }, [allJobsData, filter]);
 
   return (
     <>
@@ -37,7 +38,9 @@ export default function JobsPage() {
             <FilterJobCard />
           </div>
           {filterJobs && filterJobs.length <= 0 ? (
-            <span className="flex items-center justify-center mx-auto text-blue-600 font-bold text-3xl">Jobs Not Found</span>
+            <span className="flex items-center justify-center mx-auto text-blue-600 font-bold text-3xl">
+              Jobs Not Found
+            </span>
           ) : (
             <div className="grid lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5">
               {isFetching && [...new Array(10)].map((_, index) => <JobCardSkeleton key={index} />)}

@@ -6,18 +6,21 @@ import { ErrorBoundary } from "react-error-boundary";
 import { HelmetProvider } from "react-helmet-async";
 import { Toaster } from "sonner";
 import AuthProvider from "../context/auth-provider";
+import { NuqsAdapter } from "nuqs/adapters/react";
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   return (
     <Suspense fallback={<LoadingSpinner />}>
       <ErrorBoundary fallback={<ErrorFallback />}>
         <HelmetProvider>
-          <AuthProvider>
-            <ThemeProvider defaultTheme="dark">
-              {children}
-              <Toaster richColors />
-            </ThemeProvider>
-          </AuthProvider>
+          <NuqsAdapter>
+            <AuthProvider>
+              <ThemeProvider defaultTheme="dark">
+                {children}
+                <Toaster richColors />
+              </ThemeProvider>
+            </AuthProvider>
+          </NuqsAdapter>
         </HelmetProvider>
       </ErrorBoundary>
     </Suspense>

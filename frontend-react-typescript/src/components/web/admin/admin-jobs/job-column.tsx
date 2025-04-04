@@ -31,8 +31,13 @@ export const JobsColumn: ColumnDef<AdminJobsProps>[] = [
     header: "Salary",
   },
   {
-    accessorKey: "createdAt",
+    id: "date",
+    enableHiding: false,
     header: "Created Date",
+    cell: ({ row }) => {
+      const date = new Date(row.original.createdAt);
+      return date.toLocaleDateString();
+    },
   },
   {
     id: "actions",

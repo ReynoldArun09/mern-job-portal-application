@@ -4,6 +4,7 @@ import UseLatestJobs from "@/hooks/apis/use-latest-jobs";
 
 export default function SiteLatestJob() {
   const { isFetching, latestJobsData } = UseLatestJobs();
+
   return (
     <section className="py-10">
       <h1 className="text-xl font-bold py-5 lg:text-2xl">Latest & Top Job Openings</h1>

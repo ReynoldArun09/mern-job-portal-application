@@ -1,18 +1,14 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useJobStore } from "@/stores/useJobStore";
 import { SearchIcon } from "lucide-react";
-import * as React from "react";
 import { useNavigate } from "react-router-dom";
+import useSearchQuery from "@/hooks/useSearchQuery";
 
 export default function HeroSearch() {
-  const [query, setQuery] = React.useState<string>("");
-  const { SetSearchQuery } = useJobStore();
+  const { search, setSearch } = useSearchQuery();
   const navigate = useNavigate();
   const handleSubmit = () => {
-    if (!query || query.length < 1) return;
-    SetSearchQuery(query);
-    navigate("/browse");
+    navigate(`/browse?search=${search}`);
   };
 
   return (
@@ -20,9 +16,13 @@ export default function HeroSearch() {
       <Input
         placeholder="Search jobs by title, company or keywords"
         className="outline-none border-none w-full px-6 focus-visible:ring-0"
-        onChange={(e) => setQuery(e.target.value)}
+        onChange={(e) => setSearch(e.target.value)}
       />
-      <Button size={"lg"} className="rounded-r-full bg-purple-600 hover:bg-purple-700 text-white" onClick={handleSubmit}>
+      <Button
+        size={"lg"}
+        className="rounded-r-full bg-purple-600 hover:bg-purple-700 text-white"
+        onClick={handleSubmit}
+      >
         <SearchIcon className="h-4 w-4" />
       </Button>
     </div>

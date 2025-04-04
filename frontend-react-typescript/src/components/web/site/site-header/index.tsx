@@ -1,11 +1,11 @@
 import SiteLogo from "@/components/common/site-logo";
-import { useAuthStore } from "@/stores/useAuthStore";
+import { useUserData } from "@/stores/useAuthStore";
 import AuthButtons from "./auth-buttons";
 import NavLinks from "./nav-links";
 import ProfileInfo from "./profile-info";
 
 export default function SiteHeader() {
-  const { user } = useAuthStore();
+  const user = useUserData();
   const role = user?.role;
   return (
     <header className="border-b">
