@@ -5,7 +5,7 @@ A full-stack job portal application built with the MERN (MongoDB, Express.js, Re
 ## 🔗 Links
 
 - Live Demo: https://job-portal-mern-stack.netlify.app/
-- Repository: https://github.com/ReynoldArun09/MERN-Job-Portal-Application
+- Repository: https://github.com/ReynoldArun09/mern-job-portal-application
 
 ## 🛠️ Technologies Used
 
